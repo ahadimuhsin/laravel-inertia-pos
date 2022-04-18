@@ -21,7 +21,6 @@ return new class extends Migration
             $table->bigInteger('cash');
             $table->bigInteger('change');
             $table->bigInteger('discount');
-            $table->bigInteger('cash');
             $table->bigInteger('grand_total');
             $table->timestamps();
 
