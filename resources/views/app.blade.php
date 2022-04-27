@@ -17,6 +17,7 @@
     <script src="{{ asset('admin/js/coreui.bundle.min.js') }}"></script>
     <script src="{{ mix('/js/app.js') }}" defer></script>
     <title>Point Of sale</title>
+    @inertiaHead
 </head>
 
 <body>
