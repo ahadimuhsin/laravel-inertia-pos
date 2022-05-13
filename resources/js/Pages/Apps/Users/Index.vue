@@ -122,7 +122,7 @@ export default {
 
                     Swal.fire({
                         title: 'Deleted',
-                        text: 'user deleted succesfully',
+                        text: 'User deleted succesfully',
                         icon: 'success',
                         timer: 2000,
                         showConfirmButton: false

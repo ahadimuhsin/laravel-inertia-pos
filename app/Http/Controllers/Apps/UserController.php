@@ -34,7 +34,8 @@ class UserController extends Controller
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|unique:users',
-            'password' => 'required|confirmed'
+            'password' => 'required|confirmed',
+            'roles' => 'required'
         ],
 
         [
@@ -42,7 +43,8 @@ class UserController extends Controller
         'email.required' => 'Email harus diisi',
         'email.unique' => 'Email sudah digunakan',
         'password.required' => 'Password harus diisi',
-        'password.confirmed' => 'Konfirmasi password tidak sesuai'
+        'password.confirmed' => 'Konfirmasi password tidak sesuai',
+        'roles.required' => 'Role harus diisi'
         ]);
 
         //create user
@@ -56,7 +58,7 @@ class UserController extends Controller
         $user->assignRole($request->roles);
 
         //redirect
-        return redirect()->routes('apps.users.index');
+        return redirect()->route('apps.users.index');
     }
 
     public function edit($id)
@@ -66,7 +68,7 @@ class UserController extends Controller
         $roles = Role::all();
 
         return Inertia::render('Apps/Users/Edit', [
-            'users' => $user,
+            'user' => $user,
             'roles' => $roles
         ]);
     }
