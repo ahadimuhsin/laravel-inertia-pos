@@ -1,6 +1,6 @@
 <template>
     <Head>
-        <title>Roles - Aplikasi Kasir</title>
+        <title>users - Aplikasi Kasir</title>
     </Head>
     <main class="c-main">
         <div class="container-fluid">
@@ -11,17 +11,17 @@
                             <div class="card-header">
                                 <span class="font-weight-bold">
                                     <i class="fa fa-shield-alt"></i>
-                                    Roles
+                                    Users
                                 </span>
                             </div>
                             <div class="card-body">
                                 <form @submit.prevent="handleSearch">
                                     <div class="input-group mb-3">
-                                        <Link href="/apps/roles/create" v-if="hasAnyPermission(['roles.create'])"
+                                        <Link href="/apps/users/create" v-if="hasAnyPermission(['users.create'])"
                                         class="btn btn-primary input-group-text">
                                         <i class="fa fa-plus-circle me-2"></i> NEW
                                         </Link>
-                                        <input type="text" class="form-control" v-model="search" placeholder="Search By Role Name ...">
+                                        <input type="text" class="form-control" v-model="search" placeholder="Search By Name">
 
                                         <button class="btn btn-primary input-group-text" type="submit">
                                             <i class="fa fa-search me-2"></i> Search
@@ -32,33 +32,41 @@
                                 <table class="table table-striped table-bordered table-hover">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Role</th>
-                                            <th scope="col" style="width:50%">Permissions</th>
+                                            <th scope="col">Full Name</th>
+                                            <th scope="col">Email Address</th>
+                                            <th scope="col">users</th>
                                             <th scope="col" style="width:20%">Actions</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr v-for="(role, index) in roles.data" :key="index">
-                                            <td>{{role.name}}</td>
+                                    <tbody v-if="users.data.length">
+                                        <!-- {{ users.data.length }} -->
+                                        <tr v-for="(user, index) in users.data" :key="index">
+                                            <td>{{user.name}}</td>
+                                            <td>{{user.email}}</td>
                                             <td>
-                                                <span v-for="(permission, index) in role.permissions" :key="index" class="badge badge-primary shadow border-0 ms-2 mb-2">
-                                                    {{ permission.name }}
+                                                <span v-for="(role, index) in user.roles" :key="index" class="badge badge-primary shadow border-0 ms-2 mb-2">
+                                                    {{ role.name }}
                                                 </span>
                                             </td>
                                             <td class="text-center">
-                                                <Link :href="`/apps/roles/${role.id}/edit`" v-if="hasAnyPermission(['roles.edit'])"
+                                                <Link :href="`/apps/users/${user.id}/edit`" v-if="hasAnyPermission(['users.edit'])"
                                                 class="btn btn-success btn-sm me-1">
                                                     <i class="fas fa-pencil-alt"></i> EDIT
                                                 </Link>
-                                                <button @click.prevent="destroy(role.name, role.id)" v-if="hasAnyPermission(['roles.delete'])"
+                                                <button @click.prevent="destroy(user.name, user.id)" v-if="hasAnyPermission(['users.delete'])"
                                                 class="btn btn-danger btn-sm">
                                                     <i class="fa fa-trash"></i> DELETE
                                                 </button>
                                             </td>
                                         </tr>
                                     </tbody>
+                                    <tbody v-else>
+                                        <tr>
+                                            <td class="text-center" colspan="4">Data Kosong</td>
+                                        </tr>
+                                    </tbody>
                                 </table>
-                                <Pagination :links="roles.links" align="end"></Pagination>
+                                <Pagination :links="users.links" align="end"></Pagination>
                             </div>
                         </div>
                     </div>
@@ -82,7 +90,7 @@ export default {
         Head, Link, Pagination
     },
     props: {
-        roles: Object
+        users: Object
     },
 
     setup()
@@ -91,7 +99,7 @@ export default {
 
         //define method search
         const handleSearch = () => {
-            Inertia.get('/apps/roles', {
+            Inertia.get('/apps/users', {
                 //kirim parameter q
                 q: search.value
             })
@@ -99,7 +107,7 @@ export default {
 
         const destroy = (name, id) => {
             Swal.fire({
-                title: `Are you sure want to delete ${name} role ?`,
+                title: `Are you sure want to delete ${name} user ?`,
                 text: "You won't be able to revert this!",
                 icon: 'warning',
                 showCancelButton: true,
@@ -110,11 +118,11 @@ export default {
             .then((result) => {
                 if(result.isConfirmed)
                 {
-                    Inertia.delete(`/apps/roles/${id}`);
+                    Inertia.delete(`/apps/users/${id}`);
 
                     Swal.fire({
                         title: 'Deleted',
-                        text: 'Role deleted succesfully',
+                        text: 'user deleted succesfully',
                         icon: 'success',
                         timer: 2000,
                         showConfirmButton: false

@@ -37,5 +37,8 @@ Route::prefix('apps')->group(function(){
         //route roles
         Route::resource('roles', App\Http\Controllers\Apps\RoleController::class, ['as' => 'apps'])
         ->middleware('permission:roles.index|roles.create|roles.edit|roles.delete');
+
+        Route::resource('users', App\Http\Controllers\Apps\UserController::class, ['as' => 'apps'])
+        ->middleware('permission:users.index|users.create|users.edit|users.delete');
     });
 });
