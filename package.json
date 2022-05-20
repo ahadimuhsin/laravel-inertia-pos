@@ -17,10 +17,12 @@
         "vue-loader": "^16.8.3"
     },
     "dependencies": {
+        "@chenfengyuan/vue-barcode": "^2.0.0",
         "@inertiajs/inertia": "^0.11.0",
         "@inertiajs/inertia-vue3": "^0.6.0",
         "@inertiajs/progress": "^0.2.7",
-        "vue": "^3.2.29",
+        "maska": "^1.5.0",
+        "vue": "^3.2.34",
         "vue-chart-3": "^3.1.2",
         "vue-sweetalert2": "^5.0.5"
     }
