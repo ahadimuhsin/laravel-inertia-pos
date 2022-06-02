@@ -11,6 +11,7 @@ class Transactions extends Model
 {
     use HasFactory;
     protected $guarded = [];
+    protected $table ="transactions";
 
     public function details()
     {
@@ -29,7 +30,7 @@ class Transactions extends Model
 
     public function profits()
     {
-        return $this->hasMany(Profit::class);
+        return $this->hasMany(Profit::class, 'transaction_id');
     }
 
     protected function createdAt() : Attribute

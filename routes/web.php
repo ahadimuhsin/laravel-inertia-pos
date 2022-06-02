@@ -49,5 +49,42 @@ Route::prefix('apps')->group(function(){
 
         Route::resource('customers', App\Http\Controllers\Apps\CustomerController::class, ['as' => 'apps'])
         ->middleware('permission:customers.index|customers.create|customers.edit|customers.delete');
+
+        /**
+         * Transaction Routes
+         */
+        Route::get('/transactions', [App\Http\Controllers\Apps\TransactionController::class, 'index'])
+        ->name('apps.transaction.index');
+
+        Route::post('/transactions/search-product', [App\Http\Controllers\Apps\TransactionController::class, 'searchProduct'])
+        ->name('apps.transaction.search-product');
+
+        Route::post('/transactions/add-to-cart', [App\Http\Controllers\Apps\TransactionController::class, 'addToCart'])
+        ->name('apps.transaction.add-to-cart');
+
+        Route::delete('/transactions/destroy-cart', [App\Http\Controllers\Apps\TransactionController::class, 'destroyCart'])
+        ->name('apps.transaction.destroy-cart');
+
+        Route::post('/transactions/store', [App\Http\Controllers\Apps\TransactionController::class, 'store'])
+        ->name('apps.transaction.store');
+
+        Route::get('/transactions/print', [App\Http\Controllers\Apps\TransactionController::class, 'print'])
+        ->name('apps.transaction.print');
+
+        /**
+         * Route Sales
+         */
+        Route::get('/sales', [\App\Http\Controllers\Apps\SaleController::class, 'index'])
+        ->middleware('permission:sales.index')->name('apps.sales.index');
+
+        Route::get('/sales/filter', [\App\Http\Controllers\Apps\SaleController::class, 'filter'])
+        ->name('apps.sales.filter');
+
+        Route::get('/sales/export', [\App\Http\Controllers\Apps\SaleController::class, 'export'])
+        ->name('apps.sales.export');
+
+        Route::get('/sales/pdf', [\App\Http\Controllers\Apps\SaleController::class, 'pdf'])
+        ->name('apps.sales.pdf');
+
     });
 });
