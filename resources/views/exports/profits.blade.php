@@ -14,26 +14,23 @@
         <tr style="background-color: #e6e6e7">
             <th scope="col">Date</th>
             <th scope="col">Invoice</th>
-            <th scope="col">Cashier</th>
-            <th scope="col">Customer</th>
             <th scope="col">Total</th>
         </tr>
     </thead>
     <tbody>
-        @foreach ($sales as $sale)
+        @foreach ($profits as $profit)
         <tr>
-            <td>{{ $sale->created_at }}</td>
-            <td>{{ $sale->invoice }}</td>
-            <td>{{ $sale->cashier->name ?? '' }}</td>
-            <td>{{ $sale->customer->name ?? 'Umum' }}</td>
+            <td>{{ $profit->created_at }}</td>
+            <td>{{ $profit->transaction->invoice }}</td>
             <td class="text-end">
-                {{ formatPrice($sale->grand_total) }}
+                {{ formatPrice($profit->total) }}
             </td>
         </tr>
         @endforeach
         <tr>
-            <td colspan="4" class="text-end font-weight-bold" style="background-color: : #e6e6e7">Total</td>
-            <td class="text-end fw-bold" style="background-color: : #e6e6e7">
+            <td colspan="2" class="text-end font-weight-bold"
+            style="background-color: #e6e6e7">Total</td>
+            <td class="text-end fw-bold" style="background-color:#e6e6e7">
                 {{ formatPrice($total) }}
             </td>
         </tr>
